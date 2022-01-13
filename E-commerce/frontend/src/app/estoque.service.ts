@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, retry, catchError } from 'rxjs/operators'
 import { Estoque } from './shared/estoque.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { urlBackend } from './global';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class EstoqueService {
     private snack: MatSnackBar
   ) { }
 
-  url: string = 'http://localhost:3000'  
+  url: string = urlBackend
 
   getById(id: number): Observable<Estoque> {
     return this.http.get(`${this.url}/estoque/${id}`)

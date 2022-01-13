@@ -6,13 +6,14 @@ import { Produto } from './shared/produto.model';
 import * as firebaseStorage from 'firebase/storage'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { tipoProdutos } from './shared/tipoProd.model';
+import { urlBackend } from './global';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProdutosService {
   imagem!: string
-  url: string = 'http://localhost:3000'
+  url: string = urlBackend
 
   constructor(
     private http: HttpClient,

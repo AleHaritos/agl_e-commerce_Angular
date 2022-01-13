@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { EMPTY, Observable, pipe } from 'rxjs';
 import { retry, map, catchError } from 'rxjs/operators'
 import { Carrinho } from './shared/carrinho.model';
+import { urlBackend } from './global';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { Carrinho } from './shared/carrinho.model';
 export class OperacoesService {
 
   carrinhoArray: Carrinho[] = []
-  url: string = 'http://localhost:3000'
+  url: string = urlBackend
 
   constructor(
     private http: HttpClient,
