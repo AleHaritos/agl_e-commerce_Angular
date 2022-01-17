@@ -12,10 +12,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./carrinho.component.css']
 })
 export class CarrinhoComponent implements OnInit {
-
+  verificou: boolean = true;
   verificado!: boolean
   carrinho!: Carrinho[]
   valorTotal: number = 0
+  valueButton: string = 'Finalizar Compra'
 
   constructor(
     private opservice: OperacoesService,
@@ -46,6 +47,10 @@ export class CarrinhoComponent implements OnInit {
     this.carrinho.map((cart: any) => {
       this.valorTotal = this.valorTotal + cart.valor * cart.quantidade
     })
+
+    this.verificou = true
+    this.valueButton = 'Finalizar Compra'
+    this.verificado = true
   }
 
   removerItem(item: any): void {
@@ -56,6 +61,10 @@ export class CarrinhoComponent implements OnInit {
     this.carrinho.map((cart: any) => {
       this.valorTotal = this.valorTotal + cart.valor * cart.quantidade
     })
+
+    this.verificou = true
+    this.valueButton = 'Finalizar Compra'
+    this.verificado = true
   }
 
   adicionar(item: any): void {
@@ -66,6 +75,10 @@ export class CarrinhoComponent implements OnInit {
     this.carrinho.map((cart: any) => {
       this.valorTotal = this.valorTotal + cart.valor * cart.quantidade
     })
+
+    this.verificou = true
+    this.valueButton = 'Finalizar Compra'
+    this.verificado = true
   }
 
   diminuir(item: any): void {
@@ -76,14 +89,17 @@ export class CarrinhoComponent implements OnInit {
     this.carrinho.map((cart: any) => {
       this.valorTotal = this.valorTotal + cart.valor * cart.quantidade
     })
+
+    this.verificou = true
+    this.valueButton = 'Finalizar Compra'
+    this.verificado = true
   }
 
 
-  verificacaoEstoque(): void {
-
+  async verificacaoEstoque(): Promise<void> {
     this.verificado = true
-
-    this.carrinho.forEach((produto: any) => {
+    this.valueButton = 'Aguarde...'
+    await this.carrinho.forEach((produto: any) => {
       this.opservice.verificacaoEstoque(produto)
           .subscribe((res: any) => {
             console.log(res)
@@ -91,17 +107,22 @@ export class CarrinhoComponent implements OnInit {
               this.verificado = true
             } else {
               this.verificado = false
+              this.verificou = false
+              this.valueButton = 'Falta de estoque'
               this.opservice.snackBar(`${produto.nome} está sem estoque`, true)
             }
           })
         
     })
 
-    if(this.verificado === true) {
-    localStorage.setItem('valorTotal', this.valorTotal.toString())
-
-    this.router.navigate(['/dados-entrega'])
-    }
+    setTimeout(() => {
+      if(this.verificou === true) {
+        localStorage.setItem('valorTotal', this.valorTotal.toString())
+    
+        this.router.navigate(['/dados-entrega'])
+        }
+    }, 1000)
+    
 
   
     
