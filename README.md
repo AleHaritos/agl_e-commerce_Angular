@@ -1,3 +1,5 @@
+URL em produção: https://aglcompany.herokuapp.com/
+
 # agl_e-commerce_Angular
 E-commerce feito com Angular e NodeJS
 
